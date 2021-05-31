@@ -1,0 +1,19 @@
+#!/usr/bin/env python
+
+import pylotoncycle
+import pprint 
+from dotenv import load_dotenv
+load_dotenv()
+
+import os
+
+username = os.environ.get('PELOTON_USER')
+password = os.environ.get('PELOTON_PASS')
+
+
+conn = pylotoncycle.PylotonCycle(username, password)
+workouts = conn.GetRecentWorkouts(5)
+for w in workouts:
+    workout_id = w['id']
+    resp = conn.GetWorkoutMetricsById(workout_id)
+    pprint.pprint(resp)
